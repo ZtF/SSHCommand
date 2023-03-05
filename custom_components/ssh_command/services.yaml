@@ -27,6 +27,11 @@ exec_command:
       example: raspberry
       selector:
         text:
+    key_filename:
+      default: ssh/id_rsa
+      example: ssh/id_rsa
+      selector:
+        text:        
 
     command:
       example: ls -la
