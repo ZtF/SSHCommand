@@ -14,11 +14,15 @@ def setup(hass, hass_config):
         port = call.data.get('port', 22)
         username = call.data.get('user', 'pi')
         password = call.data.get('pass', 'raspberry')
+        key_filename = call.data.get('key_filename')
         command = call.data.get('command')
 
         client = SSHClient()
         client.set_missing_host_key_policy(AutoAddPolicy())
-        client.connect(host, port, username, password)
+        if key_filename is None:
+            client.connect(host, port, username, password)
+        else:
+            client.connect(host, port, username=username, key_filename=key_filename)
         stdin, stdout, stderr = client.exec_command(command)
         data = stdout.read()
         stderr.read()
